@@ -1,4 +1,4 @@
-#include "plane/plane.h"
+#include "line/line.h"
 
 int main() {
     int N;
@@ -16,6 +16,7 @@ int main() {
         Point_t point2(a2, b2, c2);
         Point_t point3(a3, b3, c3);
         Triangle_t triangle(point1, point2, point3);
+
         triangles_list.push_back(triangle);
     }
 

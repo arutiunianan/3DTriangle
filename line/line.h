@@ -1,10 +1,8 @@
-#include "../point&vector/vector.h"
+#include "../plane/plane.h"
 
 struct Line_t {
-    Point_t a;
-    Point_t b;
+    Vector_t vector;
+    float distance;
 
-    Line_t(Point_t a_, Point_t b_): 
-           a(a_), b(b_) {};
-
+    Line_t(Plane_t plane1, Plane_t plane2);
 };
