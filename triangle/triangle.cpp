@@ -1,0 +1,7 @@
+#include "../plane/plane.h"
+
+bool check_intersection(Triangle_t comparison_triangle1, 
+                        Triangle_t comparison_triangle2) {
+    //Plane_t plane1(comparison_triangle1);
+    //Plane_t plane2(comparison_triangle2);
+}
