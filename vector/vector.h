@@ -1,3 +1,4 @@
+#pragma once
 #include "../point/point.h"
 
 struct Vector_t {
@@ -13,5 +14,15 @@ struct Vector_t {
 
     Vector_t operator+(Vector_t vector);
     Vector_t operator-(Vector_t vector);
+    Vector_t operator-();
+    Vector_t operator*(float value);
+    Vector_t operator/(float value);
+    Vector_t operator/(Vector_t vector);
+    Vector_t operator=(Point_t point);
     bool     operator==(float value);
+    float    length();
 };
+
+float dot(Vector_t v1, Vector_t v2);
+float dot(Vector_t v1, Point_t p2);
+Vector_t cross(Vector_t v1, Vector_t v2);

@@ -1,7 +1,7 @@
-#include "line/line.h"
+#include "plane/plane.h"
 
 int main() {
-    int N;
+    /*int N;
     std::cin >> N;
 
     std::list<Triangle_t> triangles_list;
@@ -34,5 +34,36 @@ int main() {
         }
 
         triangles_list.pop_front();
-    }
+    }*/
+
+
+   
+
+   //Vector_t v1(1, 0, 3);
+   //Vector_t v2(2 ,3, 4);
+   //float new_v = dot(v1, v2);
+   //std::cout << new_v << "\n";
+
+
+    /*Point_t point11(0, 0, 0);
+    Point_t point12(1, 0, 0);
+    Point_t point13(0, 1, 0);
+
+    Point_t point21(0, 0, 0);
+    Point_t point22(1, 0, 0);
+    Point_t point23(1, 1, 0);
+
+    Triangle_t comparison_triangle1(point11,point12,point13); 
+    Triangle_t comparison_triangle2(point21,point22,point23); 
+    std::cout << check_intersection(comparison_triangle1,comparison_triangle2);*/
+
+    /*Line_t intersection_planes_line{};
+    std::cout << intersection_planes_line.vector.z << " " << intersection_planes_line.point.z << "\n";*/
+
+    Triangle_t triangle1({0, -0.5, 0}, {0, 0.5, 0}, {0, 0, 0.5});
+    Triangle_t triangle2({-0.5, 0, 0}, {0.5, 0, 0}, {0, 0, 0});
+
+    /*Triangle_t triangle1 {Point_t(0, -0.5, 0), Point_t(0, 0.5, 0), Point_t(0, 0, 0.5)};
+    Triangle_t triangle2 {Point_t(0.25, 0, 0.25), Point_t(-0.25, 0, 0.25), Point_t(0, 0, 1)};*/
+    std::cout << check_intersection(triangle1, triangle2) << "\n";
 }
