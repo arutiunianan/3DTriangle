@@ -24,4 +24,18 @@ TEST(CheckTriangle, Subtestv_3) {
     ASSERT_TRUE(check_intersection(triangle1, triangle2));
 }
 
+TEST(CheckTriangle, Subtestv_4) {
+    Triangle_t triangle1({0, -0.5, 0}, {0, 0.5, 0}, {0, 0, 0.5});
+    Triangle_t triangle2({0, 0, 0}, {0, 0, 0}, {0, 0, 0});
+
+    ASSERT_TRUE(check_intersection(triangle1, triangle2));
+}
+
+TEST(CheckTriangle, Subtestv_5) {
+    Triangle_t triangle1({0, -0.5, 0}, {0, 0.5, 0}, {0, 0, 0.5});
+    Triangle_t triangle2({0, 0, 0.25}, {0, 0, 0.25}, {0, 0, 0.25});
+
+    ASSERT_TRUE(check_intersection(triangle1, triangle2));
+}
+
 #endif // #define TTEST_H_

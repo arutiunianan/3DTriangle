@@ -1,12 +1,31 @@
 #include "../line/line_segment.h"
 #include <float.h>
 
+bool Triangle_t::is_point() {
+    return (a == b && c == b);
+}
+
+bool Triangle_t::is_point_in_triangle(Point_t& point) {
+    Vector_t AP(a, point);
+    Vector_t AB(a, b);
+    Vector_t AC(a, c);
+    return cross(cross(AP, AB), cross(AB, AC)) == 0;
+}
+
 bool check_intersection(Triangle_t comparison_triangle1, 
                         Triangle_t comparison_triangle2) {
     //the planes in which our triangles are located
     Plane_t plane1(comparison_triangle1);
     Plane_t plane2(comparison_triangle2);
 
+    if(comparison_triangle1.is_point()) {
+        Point_t triangle1(comparison_triangle1);
+        return comparison_triangle2.is_point_in_triangle(triangle1);
+    }
+    if(comparison_triangle2.is_point()) {
+        Point_t triangle2(comparison_triangle2);
+        return comparison_triangle1.is_point_in_triangle(triangle2);
+    }
     //std::cout << plane1.vector.x << " " << plane1.vector.y << " " << plane1.vector.z << " " << plane1.distance << "\n";
     //std::cout << plane2.vector.x << " " << plane2.vector.y << " " << plane2.vector.z << " " << plane2.distance << "\n";
 
