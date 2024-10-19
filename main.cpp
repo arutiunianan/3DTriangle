@@ -61,7 +61,7 @@ int main() {
     std::cout << intersection_planes_line.vector.z << " " << intersection_planes_line.point.z << "\n";*/
 
     Triangle_t triangle1({0, -0.5, 0}, {0, 0.5, 0}, {0, 0, 0.5});
-    Triangle_t triangle2({0, 0, 0}, {0, 0, 0}, {0, 0, 0});
+    Triangle_t triangle2({-0.5, 0, 0}, {0.5, 0, 0}, {0, 0, 0});
 
     /*Triangle_t triangle1 {Point_t(0, -0.5, 0), Point_t(0, 0.5, 0), Point_t(0, 0, 0.5)};
     Triangle_t triangle2 {Point_t(0.25, 0, 0.25), Point_t(-0.25, 0, 0.25), Point_t(0, 0, 1)};*/

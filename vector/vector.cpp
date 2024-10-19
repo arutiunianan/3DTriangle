@@ -61,3 +61,7 @@ float dot(Vector_t v1, Vector_t v2) {
 float dot(Vector_t v1, Point_t p2) {
     return v1.x * p2.x + v1.y * p2.y + v1.z * p2.z;
 }
+
+void Vector_t::print() {
+    std::cout << x << " " << y << " " << z << std::endl;
+}

@@ -37,3 +37,12 @@ bool Plane_t::vertices_on_one_side(Triangle_t& triangle) {
 
     return false;
 }
+
+bool Plane_t::vertices_on_plane(Triangle_t& triangle) {
+    if(put_point_in_equation(triangle.a) == 0 &&
+       put_point_in_equation(triangle.b) == 0 &&
+       put_point_in_equation(triangle.c)== 0) {
+       return true;
+    }
+    return false;
+}

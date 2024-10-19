@@ -20,7 +20,7 @@ TEST(CheckLine, Subtestv_1) {
 TEST(CheckLine, Subtestv_2) {
     Triangle_t triangle({0, -0.5, 0}, {0, 0.5, 0}, {0, 0, 0.5});
     Plane_t plane({0, 0.35, 0}, 0);
-    Line_t line({0, 0, -0.1875}, {0, 0, 0});
+    Line_t line(Vector_t{0, 0, -0.1875}, {0, 0, 0});
     Line_segment_t seg(triangle, plane, line);
 
     ASSERT_NEAR(seg.t1, -2.6667, 0.0001f);
@@ -30,7 +30,7 @@ TEST(CheckLine, Subtestv_2) {
 TEST(CheckLine, Subtestv_3) {
     Triangle_t triangle({0.25, 0, 0.25}, {-0.25, 0, 0.25}, {0, 0, 1});
     Plane_t plane({0.5, 0, 0}, 0);
-    Line_t line({0, 0, -0.1875}, {0, 0, 0});
+    Line_t line(Vector_t{0, 0, -0.1875}, {0, 0, 0});
     Line_segment_t seg(triangle, plane, line);
 
     ASSERT_NEAR(seg.t1, -5.3333, 0.0001f);
@@ -40,7 +40,7 @@ TEST(CheckLine, Subtestv_3) {
 TEST(CheckLine, Subtestv_4) {
     Triangle_t triangle({1, 0, 0}, {0, 1, 0}, {0, 0, 1});
     Plane_t plane({2, -2, 0}, 0);
-    Line_t line({-2, -2, 4}, {0.3333, 0.3333, 0.3333});
+    Line_t line(Vector_t{-2, -2, 4}, {0.3333, 0.3333, 0.3333});
     Line_segment_t seg(triangle, plane, line);
 
     ASSERT_NEAR(seg.t1, -0.0833, 0.0001f);
@@ -50,10 +50,32 @@ TEST(CheckLine, Subtestv_4) {
 TEST(CheckLine, Subtestv_5) {
     Triangle_t triangle({0, 0, 0}, {1, 1, 1}, {0, 0, 2});
     Plane_t plane({1, 1, 1}, -1);
-    Line_t line({-2, -2, 4}, {0.3333, 0.3333, 0.3333});
+    Line_t line(Vector_t{-2, -2, 4}, {0.3333, 0.3333, 0.3333});
     Line_segment_t seg(triangle, plane, line);
 
     ASSERT_NEAR(seg.t1, 0, 0.0001f);
     ASSERT_NEAR(seg.t2, 0.1666, 0.0001f);
 }
+
+TEST(CheckLine, Subtestv_6) {
+    Triangle_t triangle({0, -0.5, 0.5}, {0, 1, 0.5}, {0, 0.5, 0.5});
+    Plane_t plane({0, 1, 0}, 0);
+    Line_t line{triangle.a, triangle.b};
+    Line_segment_t seg{triangle, plane, line};
+
+    ASSERT_NEAR(seg.t1, 0.3333, 0.0001f);
+    ASSERT_NEAR(seg.t2, 0.3333, 0.0001f);
+}
+
+TEST(CheckLine, Subtestv_7) {
+    Triangle_t triangle({0, -1, -0.5}, {0, -0.5, 0}, {0, 0.5, 1});
+    Plane_t plane({0, 1, 0}, 0);
+    Line_t line{triangle.a, triangle.b};
+    Line_segment_t seg{triangle, plane, line};
+
+    ASSERT_NEAR(seg.t1, 2, 0.0001f);
+    ASSERT_NEAR(seg.t2, 2, 0.0001f);
+}
+
+
 #endif // #define LTEST_H_

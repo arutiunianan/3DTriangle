@@ -12,5 +12,6 @@ struct Plane_t {
 
     float put_point_in_equation(Point_t& point);
     bool vertices_on_one_side(Triangle_t& triangle);
+    bool vertices_on_plane(Triangle_t& triangle);
 };
 

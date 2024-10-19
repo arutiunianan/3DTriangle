@@ -11,8 +11,6 @@ Line_t::Line_t(Plane_t& p1, Plane_t& p2) {
     float a = ((s2 * n1n2dot - s1 * n2normsqr)) / ((n1n2dot * n1n2dot - n1normsqr * n2normsqr));
     float b = ((s1 * n1n2dot - s2 * n2normsqr)) / ((n1n2dot * n1n2dot - n1normsqr * n2normsqr));
     point = p1.vector * a + p2.vector * b;
-    //std::cout << vector.x << " " << vector.y << " " << vector.z << "\n\n\n";
-    //std::cout << point.x << " " << point.y << " " << point.z << "\n";
 }
 
 float intersection_point(Point_t& vertex1, Point_t& vertex2, float dist1, float dist2, Line_t& line) {

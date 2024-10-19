@@ -21,6 +21,8 @@ struct Vector_t {
     Vector_t operator=(Point_t point);
     bool     operator==(float value);
     float    length();
+
+    void print();
 };
 
 float dot(Vector_t v1, Vector_t v2);
