@@ -6,9 +6,13 @@
 #include <list>
 #include <queue>
 
-struct TriangleWithNum {
+class TriangleWithNum {
+public:
     size_t num;
     Triangle_t triangle;
+
+    TriangleWithNum(size_t n, Triangle_t t):
+                    num(n), triangle(t) {};
 };
 
 class BoundingBox final {
@@ -20,13 +24,11 @@ public:
     BoundingBox(Point_t min, Point_t max): 
         min(min), max(max) {}
 
-    bool contains_triangle(const Triangle_t& triangle);
-
-    bool contains_point(const Point_t& point) const;
+    bool contains_triangle(Triangle_t triangle);
+    bool contains_point(Point_t point);
 };
 
-class OctTree final
-{
+class OctTree final {
     std::list<TriangleWithNum> local_triangles;
     BoundingBox boundary;
 

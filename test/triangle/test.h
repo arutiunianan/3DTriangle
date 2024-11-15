@@ -1,5 +1,4 @@
-#ifndef TTEST_H_
-#define TTEST_H_
+#pragma once
 
 #include "../vector/test.h"
 
@@ -107,5 +106,3 @@ TEST(CheckTriangle, Subtestv_15) {
 
     ASSERT_FALSE(check_intersection(triangle1, triangle2));
 }
-
-#endif // #define TTEST_H_

@@ -6,49 +6,64 @@
 | aсx  acy  acz |
 */
 Plane_t::Plane_t(Triangle_t triangle) {
-    Vector_t ab(triangle.a,  triangle.b);
-    Vector_t ac(triangle.a,  triangle.c);
+    Vector_t ab(triangle.get_a(),  triangle.get_b());
+    Vector_t ac(triangle.get_a(),  triangle.get_c());
     vector = cross(ab, ac);
-    distance = vector.x * (-triangle.a.x) + vector.y * (-triangle.a.y) + vector.z * (-triangle.a.z);
+    distance = vector.get_x() * (-triangle.get_a().get_x()) + 
+               vector.get_y() * (-triangle.get_a().get_y()) + 
+               vector.get_z() * (-triangle.get_a().get_z());
 }
 
-bool Plane_t::planes_match(Plane_t& plane) {
-    if(distance == 0 && plane.distance == 0) {
+Vector_t Plane_t::get_v() const {
+    return vector;
+}
+float Plane_t::get_d() const {
+    return distance;
+}
+
+bool Plane_t::operator==(Plane_t plane) const {
+    return (vector.get_x() == plane.get_v().get_x()) &&
+           (vector.get_y() == plane.get_v().get_y()) &&
+           (vector.get_z() == plane.get_v().get_z()) &&
+           (distance == plane.get_d());
+}
+
+bool Plane_t::planes_match(Plane_t& plane) const {
+    if(distance == 0 && plane.get_d() == 0) {
         return true;
     }
-    if(vector == 0 && plane.vector == 0) {
+    if(vector == 0 && plane.get_v() == 0) {
         return true;
     }
-    if((vector.x / plane.vector.x) == (distance / plane.distance)) {
+    if((vector.get_x() / plane.vector.get_x()) == 
+        (distance / plane.get_d())) {
         return true;
     }
     return false;
 }
 
-float Plane_t::put_point_in_equation(Point_t& point) {
-    return (point.x * vector.x + point.y * vector.y + point.z * vector.z + distance);
+float Plane_t::put_point_in_equation(Point_t point) const {
+    return (point.get_x() * vector.get_x() + 
+            point.get_y() * vector.get_y() + 
+            point.get_z() * vector.get_z() + distance);
 }
 
-bool Plane_t::vertices_on_one_side(Triangle_t& triangle) {
-    if(put_point_in_equation(triangle.a) > 0 &&
-       put_point_in_equation(triangle.b) > 0 &&
-       put_point_in_equation(triangle.c) > 0) {
+bool Plane_t::vertices_on_one_side(Triangle_t& triangle) const {
+    if(put_point_in_equation(triangle.get_a()) > 0 &&
+       put_point_in_equation(triangle.get_b()) > 0 &&
+       put_point_in_equation(triangle.get_c()) > 0) {
        return true;
     }
-    if(put_point_in_equation(triangle.a) < 0 &&
-       put_point_in_equation(triangle.b) < 0 &&
-       put_point_in_equation(triangle.c) < 0) {
+    if(put_point_in_equation(triangle.get_a()) < 0 &&
+       put_point_in_equation(triangle.get_b()) < 0 &&
+       put_point_in_equation(triangle.get_c()) < 0) {
        return true;
     }
-
     return false;
 }
 
-bool Plane_t::vertices_on_plane(Triangle_t& triangle) {
-    if(put_point_in_equation(triangle.a) == 0 &&
-       put_point_in_equation(triangle.b) == 0 &&
-       put_point_in_equation(triangle.c)== 0) {
-       return true;
-    }
-    return false;
+bool Plane_t::vertices_on_plane(Triangle_t& triangle) const {
+    return (put_point_in_equation(triangle.get_a()) == 0) &&
+           (put_point_in_equation(triangle.get_b()) == 0) &&
+           (put_point_in_equation(triangle.get_c())== 0);
 }

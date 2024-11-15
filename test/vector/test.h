@@ -8,12 +8,11 @@ TEST(CheckVector, Subtestv_1) {
     Vector_t v1(1, 0, 3);
     Vector_t v2(2 ,3, 4);
 
-    float new_v1 = dot(v1, v2);
+    float    new_v1 = dot(v1, v2);
     Vector_t new_v2 = cross(v1, v2);
 
-    ASSERT_TRUE(new_v2.x == -9);
-    ASSERT_TRUE(new_v2.y == 2);
-    ASSERT_TRUE(new_v2.z == 3);
+    Vector_t answer{-9, 2, 3};
+    ASSERT_TRUE(new_v2 == answer);
     ASSERT_TRUE(new_v1 == 14);
 }
 
@@ -24,9 +23,8 @@ TEST(CheckVector, Subtestv_2) {
     float new_v1 = dot(v1, v2);
     Vector_t new_v2 = cross(v1, v2);
 
-    ASSERT_TRUE(new_v2.x == -39);
-    ASSERT_TRUE(new_v2.y == -26);
-    ASSERT_TRUE(new_v2.z == 12);
+    Vector_t answer{-39, -26, 12};
+    ASSERT_TRUE(new_v2 == answer);
     ASSERT_TRUE(new_v1 == 8);
 }
 

@@ -10,27 +10,33 @@ int main() {
 
     std::list<TriangleWithNum> triangles;
 
-    Point_t min_point, max_point;
-
+    float minx, miny, minz;
+    float maxx, maxy, maxz;
     for(size_t i = 0; i < N; ++i) {
-        Point_t p1, p2, p3;
-        std::cin >> p1.x >> p1.y >> p1.z;
-        std::cin >> p2.x >> p2.y >> p2.z;
-        std::cin >> p3.x >> p3.y >> p3.z;
+        float x1, y1, z1;
+        float x2, y2, z2;
+        float x3, y3, z3;
+        std::cin >> x1 >> y1 >> z1;
+        std::cin >> x2 >> y2 >> z2;
+        std::cin >> x3 >> y3 >> z3;
 
-        min_point.x = std::min(min_point.x, std::min({p1.x, p2.x, p3.x}));
-        min_point.y = std::min(min_point.x, std::min({p1.y, p2.y, p3.y}));
-        min_point.z = std::min(min_point.x, std::min({p1.z, p2.z, p3.z}));
 
-        max_point.x = std::max(min_point.x, std::max({p1.x, p2.x, p3.x}));
-        max_point.y = std::max(min_point.x, std::max({p1.y, p2.y, p3.y}));
-        max_point.z = std::max(min_point.x, std::max({p1.z, p2.z, p3.z}));
+        minx = std::min(minx, std::min({x1, x2, x3}));
+        miny = std::min(minx, std::min({y1, y2, y3}));
+        minz = std::min(minx, std::min({z1, z2, z3}));
 
-        Triangle_t triangle{p1, p2, p3};
+        maxx = std::max(minx, std::max({x1, x2, x3}));
+        maxy = std::max(minx, std::max({y1, y2, y3}));
+        maxz = std::max(minx, std::max({z1, z2, z3}));
+
+        Triangle_t triangle{{x1, y1, z1}, 
+                            {x2, y2, z2}, 
+                            {x3, y3, y3}};
         triangles.push_back({i, triangle});
     }
 
-    BoundingBox initial_box(min_point, max_point);
+    BoundingBox initial_box(Point_t{minx, miny, minz}, 
+                            Point_t{maxx, maxy, maxz});
     OctTree octree(initial_box, triangles);
 
     octree.build_tree();
