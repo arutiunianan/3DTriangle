@@ -17,16 +17,17 @@ float Triangle_t::triangle_square() {
     return 0.5 * cross(AB, AC).length();
 }
 
-void Triangle_t::check_triangle_type() {
+bool Triangle_t::check_triangle_type() {
     if(is_point()) {
         type = IS_POINT;
-        return;
+        return false;
     }
     if(is_segment()) {
         type = IS_SEGMENT;
-        return;
+        return false;
     }
     type = IS_TRIANGLE;
+    return true;
 }
 
 Point_t Triangle_t::operator[](int i) {

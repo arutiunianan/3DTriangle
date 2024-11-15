@@ -73,21 +73,25 @@ bool segment_segment_check(Triangle_t& triangle1, Triangle_t& triangle2) {
     check_lines_intersection(line1, line2, 1, 2, 0, t1, t2);
     check_lines_intersection(line1, line2, 2, 0, 1, t1, t2);
 
-    float min1 = std::min(line1.get_t(triangle1.a), line1.get_t(triangle1.b));
-    min1 = std::min(line1.get_t(triangle1.a), min1);
+    float min1 = std::min(std::min(line1.get_t(triangle1.a), 
+                                   line1.get_t(triangle1.b)), 
+                                   line1.get_t(triangle1.c));
     
-    float max1 = std::max(line1.get_t(triangle1.a), line1.get_t(triangle1.b));
-    max1 = std::max(line1.get_t(triangle1.a), max1);
+    float max1 = std::max(std::max(line1.get_t(triangle1.a), 
+                                   line1.get_t(triangle1.b)),
+                                   line1.get_t(triangle1.c));
 
     if(t1 < min1 && t1 > max1) {
         return false;
     }
 
-    float min2 = std::min(line1.get_t(triangle1.a), line1.get_t(triangle1.b));
-    min2 = std::min(line1.get_t(triangle1.a), min2);
+    float min2 = std::min(std::min(line2.get_t(triangle2.a), 
+                                   line2.get_t(triangle2.b)), 
+                                   line2.get_t(triangle2.c));
 
-    float max2 = std::max(line1.get_t(triangle1.a), line1.get_t(triangle1.b));
-    max2 = std::max(line1.get_t(triangle1.a), max2);
+    float max2 = std::max(std::max(line2.get_t(triangle2.a), 
+                                   line2.get_t(triangle2.b)),
+                                   line2.get_t(triangle2.c));
 
     if(t2 < min2 && t2 > max2) {
         return false;
@@ -129,10 +133,8 @@ void compute_interval(Triangle_t& triangle, Vector_t& d, float& min, float& max)
     float s2 = dot(d, triangle.b);
     float s3 = dot(d, triangle.c);
 
-    min = std::min(s1, s2);
-    min = std::min(min, s3);
-    max = std::max(s1, s2);
-    max = std::max(max, s3);
+    min = std::min(std::min(s1, s2), s3);
+    max = std::max(std::max(s1, s2), s3);
 }
 
 bool triangles2d_check(Triangle_t& triangle1, Triangle_t& triangle2, Plane_t& plane) {

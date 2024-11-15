@@ -18,6 +18,11 @@ Point_t Point_t::operator-(Point_t point) {
     return new_point;
 }
 
+Point_t Point_t::operator*(float value) {
+    Point_t new_point(x * value, y * value, z * value);
+    return new_point;
+}
+
 bool Point_t::operator==(Point_t point) {
     return (x == point.x && y == point.y && z == point.z);
 }

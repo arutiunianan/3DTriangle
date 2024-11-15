@@ -21,6 +21,7 @@ struct Point_t {
         
     Point_t operator+(Point_t point);
     Point_t operator-(Point_t point);
+    Point_t operator*(float value);
     Point_t operator=(Vector_t vector);
     bool operator==(Point_t point);
     float operator[](int i);

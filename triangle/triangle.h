@@ -19,7 +19,7 @@ struct Triangle_t {
 
     Point_t operator[](int i);
 
-    void check_triangle_type();
+    bool check_triangle_type();
 
     bool is_point();
     bool is_segment();
