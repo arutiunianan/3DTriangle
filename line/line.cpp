@@ -13,6 +13,20 @@ Line_t::Line_t(Plane_t& p1, Plane_t& p2) {
     point = p1.vector * a + p2.vector * b;
 }
 
+float Line_t::get_t(Point_t p) {
+    return (p.x - point.x) / vector.x;
+}
+
+bool Line_t::lines_match(Line_t& line) {
+    float k = vector.x / line.vector.x;
+    if((point.x / line.point.x) == k &&
+       (point.y / line.point.y) == k &&
+       (point.z / line.point.z) == k) {
+        return true;
+    }
+    return false;
+}
+
 float intersection_point(Point_t& vertex1, Point_t& vertex2, float dist1, float dist2, Line_t& line) {
     Vector_t PV1(line.point, vertex1);
     Vector_t PV2(line.point, vertex2);
@@ -23,55 +37,9 @@ float intersection_point(Point_t& vertex1, Point_t& vertex2, float dist1, float 
 }
 
 Line_segment_t::Line_segment_t(Triangle_t& triangle, Plane_t& plane, Line_t& inst_line) {
-    //line = inst_line;
-    //std::cout << triangle.a.x << " " << triangle.a.y << " " << triangle.a.z << "\n";
-    //std::cout << plane.vector.x << " " << plane.vector.y << " " << plane.vector.z << " " << plane.distance << "\n";
-    //std::cout << inst_line.vector.x << " " << inst_line.vector.y << " " << inst_line.vector.z << "\n";
-    //std::cout << inst_line.point.x << " " << inst_line.point.y << " " << inst_line.point.z << "\n";
-
     float f1 = plane.put_point_in_equation(triangle.a);
     float f2 = plane.put_point_in_equation(triangle.b);
     float f3 = plane.put_point_in_equation(triangle.c);
-
-    /*if(f1 == 0) {
-        t1 = (triangle.a.x - inst_line.point.x) / inst_line.vector.x;
-        if(f2 * f3 > 0) {
-            t2 = t1;
-        }
-        else if(f2 * f3 < 0) {
-            t2 = intersection_point(triangle.b, triangle.c, f2, f3, inst_line);
-        }
-        else if(f2 == 0) {
-            t2 = (triangle.b.x - inst_line.point.x) / inst_line.vector.x;
-        }
-        else if(f3 == 0) {
-            t2 = (triangle.c.x - inst_line.point.x) / inst_line.vector.x;
-        }
-    }
-
-    if(f2 == 0) {
-        t1 = (triangle.b.x - inst_line.point.x) / inst_line.vector.x;
-        if(f1 * f3 > 0) {
-            t2 = t1;
-        }
-        else if(f1 * f3 < 0) {
-            t2 = intersection_point(triangle.a, triangle.c, f1, f3, inst_line);
-        }
-        else if(f3 == 0) {
-            t2 = (triangle.c.x - inst_line.point.x) / inst_line.vector.x;
-        }
-    }
-
-    if(f3 == 0) {
-        t1 = (triangle.c.x - inst_line.point.x) / inst_line.vector.x;
-        if(f1 * f3 > 0) {
-            t2 = t1;
-        }
-
-        if(f1 * f2 < 0) {
-            t2 = intersection_point(triangle.a, triangle.b, f1, f2, inst_line);
-        }
-    }*/
 
     if(f1 * f2 >= 0) {
         t1 = intersection_point(triangle.a, triangle.c, f1, f3, inst_line);

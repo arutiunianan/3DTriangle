@@ -20,6 +20,7 @@ struct Vector_t {
     Vector_t operator/(Vector_t vector);
     Vector_t operator=(Point_t point);
     bool     operator==(float value);
+    float    operator[](int i);
     float    length();
 
     void print();

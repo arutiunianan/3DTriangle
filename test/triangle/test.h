@@ -73,4 +73,39 @@ TEST(CheckTriangle, Subtestv_10) {
     ASSERT_FALSE(check_intersection(triangle1, triangle2));
 }
 
+TEST(CheckTriangle, Subtestv_11) {
+    Triangle_t triangle1({2, -2, 0}, {2, -2, 0}, {-2, 2, 2});
+    Triangle_t triangle2({0.2, -0.4, 0}, {0, 0, 0}, {0, 0, 1});
+
+    ASSERT_TRUE(check_intersection(triangle1, triangle2));
+}
+
+TEST(CheckTriangle, Subtestv_12) {
+    Triangle_t triangle1({2, -2, 0}, {2, -2, 0}, {-2, 2, 2});
+    Triangle_t triangle2({1, -2, -4}, {1, -2, -4}, {0, 0, 1});
+
+    ASSERT_TRUE(check_intersection(triangle1, triangle2));
+}
+
+TEST(CheckTriangle, Subtestv_13) {
+    Triangle_t triangle1({0.2, -0.4, 0}, {0, 0, 0}, {0, 0, -1});
+    Triangle_t triangle2({0, 0, 2}, {0, 0, 2}, {0, 0, -4});
+
+    ASSERT_TRUE(check_intersection(triangle1, triangle2));
+}
+
+TEST(CheckTriangle, Subtestv_14) {
+    Triangle_t triangle1({0, 1, 0}, {0, -1, 0}, {0, 0, 1});
+    Triangle_t triangle2({0, 0, 0}, {0, 2, 0}, {0, 2, 2});
+
+    ASSERT_TRUE(check_intersection(triangle1, triangle2));
+}
+
+TEST(CheckTriangle, Subtestv_15) {
+    Triangle_t triangle1({1, 0, 1}, {1, 0, 1}, {0, 2, 0});
+    Triangle_t triangle2({-1, 0, 2}, {0, 1, 1}, {0, 1, 1});
+
+    ASSERT_FALSE(check_intersection(triangle1, triangle2));
+}
+
 #endif // #define TTEST_H_

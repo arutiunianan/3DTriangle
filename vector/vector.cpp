@@ -45,6 +45,18 @@ bool Vector_t::operator==(float value) {
     return false;
 }
 
+float Vector_t::operator[](int i) {
+    if(i == 0) {
+        return x;
+    }
+    if(i == 1) {
+        return y;
+    }
+    if(i == 2) {
+        return z;
+    }
+}
+
 float Vector_t::length() {
     return sqrt(x * x + y * y + z * z);
 }

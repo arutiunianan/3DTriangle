@@ -29,6 +29,18 @@ Point_t Point_t::operator=(Vector_t vector) {
     return *this;
 }
 
+float Point_t::operator[](int i) {
+    if(i == 0) {
+        return x;
+    }
+    if(i == 1) {
+        return y;
+    }
+    if(i == 2) {
+        return z;
+    }
+}
+
 void Point_t::print() {
     std::cout << x << " " << y << " " << z << std::endl;
 }

@@ -3,7 +3,7 @@
 /*
 |  i    j    k  |
 | abx  aby  abz | = n - the normal vector of the plane
-| abx  acy  acz |
+| aсx  acy  acz |
 */
 Plane_t::Plane_t(Triangle_t triangle) {
     Vector_t ab(triangle.a,  triangle.b);
@@ -13,6 +13,12 @@ Plane_t::Plane_t(Triangle_t triangle) {
 }
 
 bool Plane_t::planes_match(Plane_t& plane) {
+    if(distance == 0 && plane.distance == 0) {
+        return true;
+    }
+    if(vector == 0 && plane.vector == 0) {
+        return true;
+    }
     if((vector.x / plane.vector.x) == (distance / plane.distance)) {
         return true;
     }
