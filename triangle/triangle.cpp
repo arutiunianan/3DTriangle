@@ -57,3 +57,9 @@ Point_t Triangle_t::operator[](int i) const {
         return a;
     }
 }
+
+void Triangle_t::print() const {
+    a.print();
+    b.print();
+    c.print();
+}

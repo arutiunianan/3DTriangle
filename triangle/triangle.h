@@ -29,10 +29,13 @@ public:
     Triangle_type get_type() const;
     bool          check_triangle_type();
 
+    float triangle_square() const;
+
+    void print() const;
+
+private:
     bool is_point()   const;
     bool is_segment() const;
-
-    float triangle_square() const;
 };
 
 bool check_intersection(Triangle_t& comparison_triangle1, 

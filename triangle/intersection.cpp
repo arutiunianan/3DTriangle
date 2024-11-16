@@ -7,10 +7,10 @@ bool point_point_check(Triangle_t& triangle1, Triangle_t& triangle2) {
 
 bool segment_point_check(Point_t point, Triangle_t segment) {
     Line_t line{segment.get_a(), segment.get_b()};
-    float t1 = line.get_t(segment.get_a());
-    float t2 = line.get_t(segment.get_b());
-    float t3 = line.get_t(segment.get_c());
-    float t  = line.get_t(point);
+    float t1 = line.get_t(segment.get_a(), 0);
+    float t2 = line.get_t(segment.get_b(), 0);
+    float t3 = line.get_t(segment.get_c(), 0);
+    float t  = line.get_t(point, 0);
     if(t > t1 && t > t2 && t > t3) {
         return false;
     }
@@ -35,10 +35,10 @@ std::pair<Point_t, Point_t> diff_points(Triangle_t& triangle) {
     if(triangle.get_a() == triangle.get_c()) {
         return std::pair<Point_t, Point_t>(triangle.get_a(), triangle.get_b());
     }
-    return std::pair<Point_t, Point_t>(triangle.get_b(), triangle.get_c());
+    return std::pair<Point_t, Point_t>(triangle.get_a(), triangle.get_c());
 }
 
-inline bool check_lines_intersection(Line_t line1, Line_t line2, int i, int j, int k, 
+bool check_lines_intersection(Line_t line1, Line_t line2, int i, int j, int k, 
                                      float& t1, float& t2) {
     if(line1.get_v()[i] * line2.get_v()[j] -
        line2.get_v()[i] * line1.get_v()[j] != 0) {
@@ -46,14 +46,22 @@ inline bool check_lines_intersection(Line_t line1, Line_t line2, int i, int j, i
            + (line2.get_p()[j] - line1.get_p()[j]) * line1.get_v()[i])
            / (line2.get_v()[i] * line1.get_v()[j] - line2.get_v()[j] * line1.get_v()[i]);
 
-        t1 = (line2.get_v()[i] * t2 + line2.get_p()[i] - line1.get_p()[i])
-            / line1.get_p()[i];
+        if(line1.get_v()[i]) { 
+            t1 = (line2.get_v()[i] * t2 + line2.get_p()[i] - line1.get_p()[i])
+                / line1.get_v()[i];
+        }
+        else {
+            t1 = (line2.get_v()[j] * t2 + line2.get_p()[j] - line1.get_p()[j])
+                / line1.get_v()[j];
+        }
 
         if((line1.get_v()[k] * t1 + line1.get_p()[k]) != 
-           (line2.get_p()[k] * t2 + line2.get_p()[k])) {
+           (line2.get_v()[k] * t2 + line2.get_p()[k])) {
             return false;
         }
+        return true;
     }
+    return false;
 }
 
 bool segment_segment_check(Triangle_t& triangle1, Triangle_t& triangle2) {
@@ -69,34 +77,36 @@ bool segment_segment_check(Triangle_t& triangle1, Triangle_t& triangle2) {
 
     float t2 = 0;
     float t1 = 0;
-    check_lines_intersection(line1, line2, 0, 1, 2, t1, t2);
-    check_lines_intersection(line1, line2, 1, 2, 0, t1, t2);
-    check_lines_intersection(line1, line2, 2, 0, 1, t1, t2);
-
-    float min1 = std::min(std::min(line1.get_t(triangle1.get_a()), 
-                                   line1.get_t(triangle1.get_b())), 
-                                   line1.get_t(triangle1.get_c()));
+    if(!check_lines_intersection(line1, line2, 0, 1, 2, t1, t2)) {
+        return false;
+    } else if(!check_lines_intersection(line1, line2, 1, 2, 0, t1, t2)) {
+        return false;
+    } else if(!check_lines_intersection(line1, line2, 2, 0, 1, t1, t2)) {
+        return false;
+    }
+    float min1 = std::min(std::min(line1.get_t(triangle1.get_a(), 0), 
+                                   line1.get_t(triangle1.get_b(), 0)), 
+                                   line1.get_t(triangle1.get_c(), 0));
     
-    float max1 = std::max(std::max(line1.get_t(triangle1.get_a()), 
-                                   line1.get_t(triangle1.get_b())),
-                                   line1.get_t(triangle1.get_c()));
+    float max1 = std::max(std::max(line1.get_t(triangle1.get_a(), 0), 
+                                   line1.get_t(triangle1.get_b(), 0)),
+                                   line1.get_t(triangle1.get_c(), 0));
 
     if(t1 < min1 && t1 > max1) {
         return false;
     }
 
-    float min2 = std::min(std::min(line2.get_t(triangle2.get_a()), 
-                                   line2.get_t(triangle2.get_b())), 
-                                   line2.get_t(triangle2.get_c()));
+    float min2 = std::min(std::min(line2.get_t(triangle2.get_a(), 0), 
+                                   line2.get_t(triangle2.get_b(), 0)), 
+                                   line2.get_t(triangle2.get_c(), 0));
 
-    float max2 = std::max(std::max(line2.get_t(triangle2.get_a()), 
-                                   line2.get_t(triangle2.get_b())),
-                                   line2.get_t(triangle2.get_c()));
+    float max2 = std::max(std::max(line2.get_t(triangle2.get_a(), 0), 
+                                   line2.get_t(triangle2.get_b(), 0)),
+                                   line2.get_t(triangle2.get_c(), 0));
 
     if(t2 < min2 && t2 > max2) {
         return false;
     }
-
     return true;
 }
 

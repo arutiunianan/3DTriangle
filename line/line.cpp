@@ -22,18 +22,18 @@ Point_t  Line_t::get_p() const {
     return point;
 }
 
-float Line_t::get_t(Point_t p) const {
-    return (p.get_x() - point.get_x()) / vector.get_x();
+float Line_t::get_t(Point_t p, int i) const {
+    return (p[i] - point[i]) / vector[i];
 }
 
 bool Line_t::lines_match(Line_t& line) const {
-    float k = vector.get_x() / line.vector.get_x();
-    if((point.get_x() / line.point.get_x()) == k &&
-       (point.get_y() / line.point.get_y()) == k &&
-       (point.get_z() / line.point.get_z()) == k) {
-        return true;
-    }
-    return false;
+    Vector_t v{point, line.get_p()};
+    return cross(v, vector) == 0;
+}
+
+void Line_t::print() const {
+    vector.print(); 
+    point.print();
 }
 
 float Line_segment_t::intersection_point(Point_t vertex1, Point_t vertex2, 
@@ -86,7 +86,7 @@ float Line_segment_t::get_t2() const {
 
 float Line_segment_t::compare_segments(Line_segment_t line_segment) const {
     if(t1 > line_segment.t2) {
-        return true;
+        return false;
     }
     if(t2 < line_segment.t1) {
         return false;
