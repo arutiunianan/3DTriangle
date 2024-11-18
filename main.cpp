@@ -31,7 +31,7 @@ int main() {
 
         Triangle_t triangle{{x1, y1, z1}, 
                             {x2, y2, z2}, 
-                            {x3, y3, y3}};
+                            {x3, y3, z3}};
         triangles.push_back({i, triangle});
     }
 
@@ -46,6 +46,6 @@ int main() {
 
     for(const auto& num : intersecting_triangles_sorted)
     {
-        std::cout << num + 1 << std::endl;
+        std::cout << num << std::endl;
     }
 }
