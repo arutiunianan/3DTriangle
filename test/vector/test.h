@@ -3,6 +3,7 @@
 
 #include <gtest/gtest.h>
 #include "../../line/line_segment.h"
+#include "../../octree/octree.h"
 
 TEST(CheckVector, Subtestv_1) {
     Vector_t v1(1, 0, 3);

@@ -2,6 +2,7 @@
 #include "plane/test.h"
 #include "line/test.h"
 #include "triangle/test.h"
+#include "octree/test.h"
 
 int main(int argc, char **argv)
 {

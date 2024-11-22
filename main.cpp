@@ -22,19 +22,18 @@ int main() {
 
 
         minx = std::min(minx, std::min({x1, x2, x3}));
-        miny = std::min(minx, std::min({y1, y2, y3}));
-        minz = std::min(minx, std::min({z1, z2, z3}));
+        miny = std::min(miny, std::min({y1, y2, y3}));
+        minz = std::min(minz, std::min({z1, z2, z3}));
 
-        maxx = std::max(minx, std::max({x1, x2, x3}));
-        maxy = std::max(minx, std::max({y1, y2, y3}));
-        maxz = std::max(minx, std::max({z1, z2, z3}));
+        maxx = std::max(maxx, std::max({x1, x2, x3}));
+        maxy = std::max(maxy, std::max({y1, y2, y3}));
+        maxz = std::max(maxz, std::max({z1, z2, z3}));
 
         Triangle_t triangle{{x1, y1, z1}, 
                             {x2, y2, z2}, 
                             {x3, y3, z3}};
         triangles.push_back({i, triangle});
     }
-
     BoundingBox initial_box(Point_t{minx, miny, minz}, 
                             Point_t{maxx, maxy, maxz});
     OctTree octree(initial_box, triangles);

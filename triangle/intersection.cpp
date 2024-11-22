@@ -5,8 +5,18 @@ bool point_point_check(Triangle_t& triangle1, Triangle_t& triangle2) {
     return triangle1.get_a() == triangle2.get_a();
 }
 
+std::pair<Point_t, Point_t> diff_points(Triangle_t& triangle) {
+    if(triangle.get_a() == triangle.get_b()) {
+        return std::pair<Point_t, Point_t>(triangle.get_a(), triangle.get_c());
+    }
+    if(triangle.get_a() == triangle.get_c()) {
+        return std::pair<Point_t, Point_t>(triangle.get_a(), triangle.get_b());
+    }
+    return std::pair<Point_t, Point_t>(triangle.get_a(), triangle.get_c());
+}
+
 bool segment_point_check(Point_t point, Triangle_t segment) {
-    Line_t line{segment.get_a(), segment.get_b()};
+    Line_t line{diff_points(segment)};
     float t1 = line.get_t(segment.get_a(), 0);
     float t2 = line.get_t(segment.get_b(), 0);
     float t3 = line.get_t(segment.get_c(), 0);
@@ -26,16 +36,6 @@ bool point_triangle_check(Point_t& point, Triangle_t& triangle) {
     float SAPC = Triangle_t(triangle.get_a(), point, triangle.get_c()).triangle_square();
     float SPBC = Triangle_t(point, triangle.get_b(), triangle.get_c()).triangle_square();
     return std::abs(SABC - SABP - SAPC - SPBC) < 1e-6;
-}
-
-std::pair<Point_t, Point_t> diff_points(Triangle_t& triangle) {
-    if(triangle.get_a() == triangle.get_b()) {
-        return std::pair<Point_t, Point_t>(triangle.get_a(), triangle.get_c());
-    }
-    if(triangle.get_a() == triangle.get_c()) {
-        return std::pair<Point_t, Point_t>(triangle.get_a(), triangle.get_b());
-    }
-    return std::pair<Point_t, Point_t>(triangle.get_a(), triangle.get_c());
 }
 
 bool check_lines_intersection(Line_t line1, Line_t line2, int i, int j, int k, 
@@ -207,7 +207,7 @@ bool check_intersection(Triangle_t& comparison_triangle1,
                         Triangle_t& comparison_triangle2) {
     comparison_triangle1.check_triangle_type();
     comparison_triangle2.check_triangle_type();
-
+    
     if(comparison_triangle1.get_type() == IS_POINT &&
        comparison_triangle2.get_type() == IS_POINT) {
         return point_point_check(comparison_triangle1, 

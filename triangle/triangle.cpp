@@ -62,4 +62,5 @@ void Triangle_t::print() const {
     a.print();
     b.print();
     c.print();
+    std::cout << type << std::endl;
 }
