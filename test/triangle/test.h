@@ -343,3 +343,10 @@ TEST(triangle, Subtest_49) {
 
   ASSERT_FALSE(check_intersection(triangle1, triangle2));
 }
+
+TEST(triangle, Subtest_50) {
+  Triangle_t triangle1({0, 0, 0}, {1, 0, 0}, {0, 1, 0});
+  Triangle_t triangle2({0, 0, 0.01}, {5, 5, 0.01}, {5, 5, 0});
+
+  ASSERT_FALSE(check_intersection(triangle1, triangle2));
+}

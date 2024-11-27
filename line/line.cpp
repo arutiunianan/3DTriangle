@@ -1,5 +1,7 @@
 #include "line_segment.h"
 
+#include <cmath>
+
 Line_t::Line_t(Plane_t& p1, Plane_t& p2) {
     Vector_t d = cross(p1.get_v(), p2.get_v());
     vector = -d;
@@ -91,5 +93,27 @@ float Line_segment_t::compare_segments(Line_segment_t line_segment) const {
     if(t2 < line_segment.t1) {
         return false;
     }
+
+    if(std::isinf(t1)) {
+        if(t2 > line_segment.t1 || t2 < line_segment.t2) {
+            return false;
+        }
+    }
+    if(std::isinf(t2)) {
+        if(t1 > line_segment.t1 || t1 < line_segment.t2) {
+            return false;
+        }
+    }
+    if(std::isinf(line_segment.t1)) {
+        if(line_segment.t2 > t1 || line_segment.t2 < t2) {
+            return false;
+        }
+    }
+    if(std::isinf(line_segment.t2)) {
+        if(line_segment.t1 > t1 || line_segment.t1 < t2) {
+            return false;
+        }
+    }
+
     return true;
 }
