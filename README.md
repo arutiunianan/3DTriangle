@@ -80,32 +80,32 @@
 ## Как запустить программу?
 
 ```
-mkdir build && cd build
-```
-
-Для ручного ввода данных достаточно ввести команду
-
-```
-cmake ../
+cmake -S . -B build
 ```
 
 Для запуска юнит-тестов нужно добавить флаг
 
 ```
-cmake ../ -DTEST=ON
+cmake -S . -B build -DTEST=ON
+```
+
+Для сборки проекта:
+
+```
+cmake --build build
 ```
 
 Для запуска ручного ввода и тестов соответсвенно:
 
 ```
-./3dtr
-./test
+./build/3dtr
+ctest --output-on-failure --test-dir build
 ```
 
 Для вывода графиков треугольников надо ввести команду:
 
 ```
-python3 ../graph/graph_maker.py
+python3 graph/graph_maker.py
 ```
 
 ## Как выглядит результат работы программы?
