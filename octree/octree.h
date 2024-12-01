@@ -43,7 +43,7 @@ public:
 
     void build_tree();
 
-    void print_tree() const;
+    void print_tree(int depth = 0) const;
 
     std::unordered_set<size_t> get_intersection(std::list<TriangleWithNum>& parent_triangles);
     std::unordered_set<size_t> get_intersection();

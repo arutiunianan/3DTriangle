@@ -17,6 +17,53 @@ OctTree::~OctTree() {
     }
 }
 
+void OctTree::print_tree(int depth) const {
+    for (int i = 0; i < depth; ++i) {
+        std::cout << "  ";
+    }
+
+    std::cout << "Node at depth " << depth << ":\n";
+    for (int i = 0; i < depth; ++i) {
+        std::cout << "  ";
+    }
+    std::cout << "  Boundary: [" 
+              << boundary.min.get_x() << " " << boundary.min.get_y() << " " << boundary.min.get_z() << ", " 
+              << boundary.max.get_x() << " " << boundary.max.get_y() << " " << boundary.max.get_z() << "]\n";
+
+    if (!local_triangles.empty()) {
+        for (int i = 0; i < depth; ++i) {
+            std::cout << "  ";
+        }
+        std::cout << "  Triangles: \n";
+        for (const auto& triangle : local_triangles) {
+            for (int i = 0; i < depth; ++i) {
+                std::cout << "  ";
+            }
+            std::cout << "  " << triangle.num << "      " 
+                      << triangle.triangle.get_a().get_x() << " " 
+                      << triangle.triangle.get_a().get_y() << " " 
+                      << triangle.triangle.get_a().get_z() << ", " 
+                      << triangle.triangle.get_b().get_x() << " " 
+                      << triangle.triangle.get_b().get_y() << " " 
+                      << triangle.triangle.get_b().get_z() << ", " 
+                      << triangle.triangle.get_c().get_x() << " " 
+                      << triangle.triangle.get_c().get_y() << " " 
+                      << triangle.triangle.get_c().get_z() << "\n";
+        }
+    } else {
+        for (int i = 0; i < depth; ++i) {
+            std::cout << "  ";
+        }
+        std::cout << "  No triangles in this node.\n";
+    }
+
+    for (int i = 0; i < 8; ++i) {
+        if (children_nodes[i] != nullptr) {
+            children_nodes[i]->print_tree(depth + 1);
+        }
+    }
+}
+
 void OctTree::build_tree() {
     if(local_triangles.size() <= 1)
         return;
@@ -92,7 +139,7 @@ std::unordered_set<size_t> OctTree::get_intersection(std::list<TriangleWithNum>&
     parent_triangles.insert(parent_triangles.end(), local_triangles.begin(), local_triangles.end());
 
     for(int i = 0; i < 8; i++) {
-        if(children_nodes[i] && children_nodes[i]->local_triangles.size() > 0) {
+        if(children_nodes[i]) {
             std::unordered_set<size_t> new_intersections = children_nodes[i]->get_intersection(parent_triangles);
             intersections.insert(new_intersections.begin(), new_intersections.end());
         }

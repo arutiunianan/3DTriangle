@@ -3,6 +3,7 @@
 #include <fstream>
 #include <cmath>
 #include <set>
+#include <limits>
 
 int main() {
     size_t N;
@@ -10,8 +11,13 @@ int main() {
 
     std::list<TriangleWithNum> triangles;
 
-    float minx, miny, minz;
-    float maxx, maxy, maxz;
+    float minx = std::numeric_limits<float>::max();
+    float miny = std::numeric_limits<float>::max();
+    float minz = std::numeric_limits<float>::max();
+    float maxx = std::numeric_limits<float>::lowest();
+    float maxy = std::numeric_limits<float>::lowest();
+    float maxz = std::numeric_limits<float>::lowest();
+
     for(size_t i = 0; i < N; ++i) {
         float x1, y1, z1;
         float x2, y2, z2;
