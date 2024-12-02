@@ -1,4 +1,4 @@
-#include "octree/octree.h"
+#include "../octree/octree.h"
 
 #include <fstream>
 #include <cmath>
@@ -9,7 +9,7 @@ int main() {
     size_t N;
     std::cin >> N;
 
-    std::list<TriangleWithNum> triangles;
+    std::vector<Triangle_t> triangles;
 
     float minx = std::numeric_limits<float>::max();
     float miny = std::numeric_limits<float>::max();
@@ -37,15 +37,17 @@ int main() {
         Triangle_t triangle{{x1, y1, z1}, 
                             {x2, y2, z2}, 
                             {x3, y3, z3}};
-        triangles.push_back({i, triangle});
+        triangles.push_back(triangle);
     }
-    BoundingBox initial_box(Point_t{minx, miny, minz}, 
-                            Point_t{maxx, maxy, maxz});
-    OctTree octree(initial_box, triangles);
-
-    octree.build_tree();
-
-    std::unordered_set<size_t> intersecting_triangles = octree.get_intersection();
+    std::unordered_set<size_t> intersecting_triangles;
+    for(size_t i = 0; i < N; ++i) {
+        for(size_t j = i + 1; j < N; ++j) {
+            if(check_intersection(triangles[i], triangles[j])) {
+                intersecting_triangles.insert(i);
+                intersecting_triangles.insert(j);
+            }
+        }
+    }
     std::set<size_t> intersecting_triangles_sorted(intersecting_triangles.begin(), intersecting_triangles.end());
 
     for(const auto& num : intersecting_triangles_sorted)
