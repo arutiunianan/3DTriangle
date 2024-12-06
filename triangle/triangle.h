@@ -29,7 +29,7 @@ public:
     Triangle_type get_type() const;
     bool          check_triangle_type();
 
-    float triangle_square() const;
+    double triangle_square() const;
 
     void print() const;
 

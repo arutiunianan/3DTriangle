@@ -9,7 +9,7 @@ TEST(CheckVector, Subtestv_1) {
     Vector_t v1(1, 0, 3);
     Vector_t v2(2 ,3, 4);
 
-    float    new_v1 = dot(v1, v2);
+    double    new_v1 = dot(v1, v2);
     Vector_t new_v2 = cross(v1, v2);
 
     Vector_t answer{-9, 2, 3};
@@ -21,7 +21,7 @@ TEST(CheckVector, Subtestv_2) {
     Vector_t v1(2, -3, 0);
     Vector_t v2(4 ,0, 13);
     
-    float new_v1 = dot(v1, v2);
+    double new_v1 = dot(v1, v2);
     Vector_t new_v2 = cross(v1, v2);
 
     Vector_t answer{-39, -26, 12};

@@ -11,17 +11,17 @@ int main() {
 
     std::vector<Triangle_t> triangles;
 
-    float minx = std::numeric_limits<float>::max();
-    float miny = std::numeric_limits<float>::max();
-    float minz = std::numeric_limits<float>::max();
-    float maxx = std::numeric_limits<float>::lowest();
-    float maxy = std::numeric_limits<float>::lowest();
-    float maxz = std::numeric_limits<float>::lowest();
+    double minx = std::numeric_limits<double>::max();
+    double miny = std::numeric_limits<double>::max();
+    double minz = std::numeric_limits<double>::max();
+    double maxx = std::numeric_limits<double>::lowest();
+    double maxy = std::numeric_limits<double>::lowest();
+    double maxz = std::numeric_limits<double>::lowest();
 
     for(size_t i = 0; i < N; ++i) {
-        float x1, y1, z1;
-        float x2, y2, z2;
-        float x3, y3, z3;
+        double x1, y1, z1;
+        double x2, y2, z2;
+        double x3, y3, z3;
         std::cin >> x1 >> y1 >> z1;
         std::cin >> x2 >> y2 >> z2;
         std::cin >> x3 >> y3 >> z3;

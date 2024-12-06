@@ -23,7 +23,7 @@ public:
     Vector_t get_v() const;
     Point_t  get_p() const;
 
-    float get_t(Point_t p, int i) const;
+    double get_t(Point_t p, int i) const;
     bool lines_match(Line_t& line) const;
 
     void print() const;

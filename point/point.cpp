@@ -1,6 +1,6 @@
 #include "../line/line_segment.h"
 
-Point_t::Point_t(Line_t& line, float t):
+Point_t::Point_t(Line_t& line, double t):
         x(line.get_p().get_x() + line.get_v().get_x() * t), 
         y(line.get_p().get_y() + line.get_v().get_y() * t), 
         z(line.get_p().get_z() + line.get_v().get_z() * t) {}
@@ -10,13 +10,13 @@ Point_t::Point_t(Triangle_t& triangle):
         y(triangle.get_a().get_y()), 
         z(triangle.get_a().get_z()) {};
 
-float Point_t::get_x() const {
+double Point_t::get_x() const {
     return x;
 }
-float Point_t::get_y() const {
+double Point_t::get_y() const {
     return y;
 }
-float Point_t::get_z() const {
+double Point_t::get_z() const {
     return z;
 }
 
@@ -30,7 +30,7 @@ Point_t Point_t::operator-(Point_t point) const {
     return new_point;
 }
 
-Point_t Point_t::operator*(float value) const {
+Point_t Point_t::operator*(double value) const {
     Point_t new_point(x * value, y * value, z * value);
     return new_point;
 }
@@ -46,7 +46,7 @@ Point_t Point_t::operator=(Vector_t vector) {
     return *this;
 }
 
-float Point_t::operator[](int i) const {
+double Point_t::operator[](int i) const {
     if(i == 0) {
         return x;
     }

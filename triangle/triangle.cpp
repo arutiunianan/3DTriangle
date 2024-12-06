@@ -1,5 +1,5 @@
 #include "../line/line_segment.h"
-#include <float.h>
+//#include <double.h>
 
 Point_t Triangle_t::get_a() const {
     return a;
@@ -24,7 +24,7 @@ bool Triangle_t::is_segment() const {
     return cross(AB, AC) == 0;
 }
 
-float Triangle_t::triangle_square() const {
+double Triangle_t::triangle_square() const {
     Vector_t AB(a, b);
     Vector_t AC(a, c);
     return 0.5 * cross(AB, AC).length();

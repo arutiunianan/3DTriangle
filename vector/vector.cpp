@@ -1,13 +1,13 @@
 #include "vector.h"
 #include <cmath>
 
-float Vector_t::get_x() const {
+double Vector_t::get_x() const {
     return x;
 }
-float Vector_t::get_y() const {
+double Vector_t::get_y() const {
     return y;
 }
-float Vector_t::get_z() const {
+double Vector_t::get_z() const {
     return z;
 }
 
@@ -26,12 +26,12 @@ Vector_t Vector_t::operator-() const {
     return new_vector;
 }
 
-Vector_t Vector_t::operator*(float value) const {
+Vector_t Vector_t::operator*(double value) const {
     Vector_t new_vector(x * value, y * value, z * value);
     return new_vector;
 }
 
-Vector_t Vector_t::operator/(float value) const {
+Vector_t Vector_t::operator/(double value) const {
     Vector_t new_vector(x / value, y / value, z / value);
     return new_vector;
 }
@@ -48,7 +48,7 @@ Vector_t Vector_t::operator=(Point_t point) {
     return *this;
 }
 
-bool Vector_t::operator==(float value) const {
+bool Vector_t::operator==(double value) const {
     if(x == value && y == value && z == value) {
         return true;
     }
@@ -64,7 +64,7 @@ bool Vector_t::operator==(Vector_t vector) const {
     return false;
 }
 
-float Vector_t::operator[](int i) const {
+double Vector_t::operator[](int i) const {
     if(i == 0) {
         return x;
     }
@@ -76,7 +76,7 @@ float Vector_t::operator[](int i) const {
     }
 }
 
-float Vector_t::length() const {
+double Vector_t::length() const {
     return sqrt(x * x + y * y + z * z);
 }
 
@@ -87,13 +87,13 @@ Vector_t cross(Vector_t v1, Vector_t v2) {
     return new_v;
 }
 
-float dot(Vector_t v1, Vector_t v2) {
+double dot(Vector_t v1, Vector_t v2) {
     return v1.get_x() * v2.get_x() + 
            v1.get_y() * v2.get_y() + 
            v1.get_z() * v2.get_z();
 }
 
-float dot(Vector_t v1, Point_t p2) {
+double dot(Vector_t v1, Point_t p2) {
     return v1.get_x() * p2.get_x() + 
            v1.get_y() * p2.get_y() + 
            v1.get_z() * p2.get_z();

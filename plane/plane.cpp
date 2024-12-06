@@ -1,5 +1,9 @@
 #include "plane.h"
 
+#include <cmath>
+
+const double DOUBLE_TOLERANCE = 1e-9;
+
 /*
 |  i    j    k  |
 | abx  aby  abz | = n - the normal vector of the plane
@@ -17,7 +21,7 @@ Plane_t::Plane_t(Triangle_t triangle) {
 Vector_t Plane_t::get_v() const {
     return vector;
 }
-float Plane_t::get_d() const {
+double Plane_t::get_d() const {
     return distance;
 }
 
@@ -42,28 +46,35 @@ bool Plane_t::planes_match(Plane_t& plane) const {
     return false;
 }
 
-float Plane_t::put_point_in_equation(Point_t point) const {
+double Plane_t::put_point_in_equation(Point_t point) const {
     return (point.get_x() * vector.get_x() + 
             point.get_y() * vector.get_y() + 
             point.get_z() * vector.get_z() + distance);
 }
 
+bool check_doubles_equal(double d1, double d2)
+{
+    return (std::abs(d1 - d2)) < DOUBLE_TOLERANCE;
+}
+
 bool Plane_t::vertices_on_one_side(Triangle_t& triangle) const {
-    if(put_point_in_equation(triangle.get_a()) > 0 &&
-       put_point_in_equation(triangle.get_b()) > 0 &&
-       put_point_in_equation(triangle.get_c()) > 0) {
-       return true;
+    double a_result = put_point_in_equation(triangle.get_a());
+    double b_result = put_point_in_equation(triangle.get_b());
+    double c_result = put_point_in_equation(triangle.get_c());
+
+    if(check_doubles_equal(a_result, 0) || check_doubles_equal(b_result, 0) || check_doubles_equal(c_result, 0)) {
+        return false;
     }
-    if(put_point_in_equation(triangle.get_a()) < 0 &&
-       put_point_in_equation(triangle.get_b()) < 0 &&
-       put_point_in_equation(triangle.get_c()) < 0) {
-       return true;
-    }
-    return false;
+
+    int signA = std::signbit(a_result);
+    int signB = std::signbit(b_result);
+    int signC = std::signbit(c_result);
+
+    return (signA == signB && signB == signC);
 }
 
 bool Plane_t::vertices_on_plane(Triangle_t& triangle) const {
     return (put_point_in_equation(triangle.get_a()) == 0) &&
            (put_point_in_equation(triangle.get_b()) == 0) &&
-           (put_point_in_equation(triangle.get_c())== 0);
+           (put_point_in_equation(triangle.get_c()) == 0);
 }
