@@ -1,6 +1,8 @@
 #include "vector.h"
 #include <cmath>
 
+const double DOUBLE_TOLERANCE = 1e-9;
+
 double Vector_t::get_x() const {
     return x;
 }
@@ -49,6 +51,11 @@ Vector_t Vector_t::operator=(Point_t point) {
 }
 
 bool Vector_t::operator==(double value) const {
+    if(value == 0) {
+        return std::abs(x) < DOUBLE_TOLERANCE && 
+               std::abs(y) < DOUBLE_TOLERANCE && 
+               std::abs(z) < DOUBLE_TOLERANCE;
+    }
     if(x == value && y == value && z == value) {
         return true;
     }

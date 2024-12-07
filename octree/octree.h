@@ -22,7 +22,7 @@ public:
 
     BoundingBox() {}
     BoundingBox(Point_t min, Point_t max): 
-        min(min), max(max) {}
+                min(min), max(max) {}
 
     bool contains_triangle(Triangle_t triangle);
     bool contains_point(Point_t point);

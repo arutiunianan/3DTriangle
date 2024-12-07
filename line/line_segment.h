@@ -17,5 +17,5 @@ public:
 
 private:
     double intersection_point(Point_t vertex1, Point_t vertex2, 
-                             double dist1, double dist2, Line_t& line) const;
+                              double dist1, double dist2, Line_t& line) const;
 };

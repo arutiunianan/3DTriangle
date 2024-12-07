@@ -7,7 +7,7 @@ class Plane_t;
 class Line_t final {
 private:
     Vector_t vector;
-    Point_t point;
+    Point_t  point;
 
 public:
     Line_t(): vector(), point() {};

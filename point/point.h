@@ -25,12 +25,12 @@ public:
     double get_y() const;
     double get_z() const;
 
-    Point_t operator+(Point_t point) const;
-    Point_t operator-(Point_t point) const;
-    Point_t operator*(double value)  const;
+    Point_t operator+(Point_t point)  const;
+    Point_t operator-(Point_t point)  const;
+    Point_t operator*(double value)   const;
     Point_t operator=(Vector_t vector);
-    bool operator==(Point_t point)   const;
-    double operator[](int i)         const;
+    bool    operator==(Point_t point) const;
+    double  operator[](int i)         const;
 
     void print() const;
 };

@@ -25,16 +25,16 @@ double Plane_t::get_d() const {
     return distance;
 }
 
+bool check_doubles_equal(double d1, double d2)
+{
+    return (std::abs(d1 - d2)) < DOUBLE_TOLERANCE;
+}
+
 bool Plane_t::operator==(Plane_t plane) const {
     return (vector.get_x() == plane.get_v().get_x()) &&
            (vector.get_y() == plane.get_v().get_y()) &&
            (vector.get_z() == plane.get_v().get_z()) &&
-           (distance == plane.get_d());
-}
-
-bool check_doubles_equal(double d1, double d2)
-{
-    return (std::abs(d1 - d2)) < DOUBLE_TOLERANCE;
+           (check_doubles_equal(distance, plane.get_d()));
 }
 
 bool Plane_t::planes_match(Plane_t& plane) const {
@@ -81,7 +81,7 @@ bool Plane_t::vertices_on_one_side(Triangle_t& triangle) const {
 }
 
 bool Plane_t::vertices_on_plane(Triangle_t& triangle) const {
-    return (put_point_in_equation(triangle.get_a()) == 0) &&
-           (put_point_in_equation(triangle.get_b()) == 0) &&
-           (put_point_in_equation(triangle.get_c()) == 0);
+    return (check_doubles_equal(put_point_in_equation(triangle.get_a()), 0)) &&
+           (check_doubles_equal(put_point_in_equation(triangle.get_b()), 0)) &&
+           (check_doubles_equal(put_point_in_equation(triangle.get_c()), 0));
 }
