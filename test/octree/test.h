@@ -192,3 +192,43 @@ TEST(octree, Subtest_6) {
 TEST(octree, Subtest_7) {
     ASSERT_TRUE(run_test_from_file(5));
 }
+
+TEST(octree, Subtest_8) {
+    ASSERT_TRUE(run_test_from_file(6));
+}
+
+TEST(octree, Subtest_9) {
+    ASSERT_TRUE(run_test_from_file(7));
+}
+
+TEST(octree, Subtest_10) {
+    ASSERT_TRUE(run_test_from_file(8));
+}
+
+TEST(octree, Subtest_11) {
+    ASSERT_TRUE(run_test_from_file(9));
+}
+
+TEST(octree, Subtest_12) {
+    ASSERT_TRUE(run_test_from_file(10));
+}
+
+TEST(octree, Subtest_13) {
+    ASSERT_TRUE(run_test_from_file(11));
+}
+
+TEST(octree, Subtest_14) {
+    ASSERT_TRUE(run_test_from_file(12));
+}
+
+TEST(octree, Subtest_15) {
+    ASSERT_TRUE(run_test_from_file(13));
+}
+
+TEST(octree, Subtest_16) {
+    ASSERT_TRUE(run_test_from_file(14));
+}
+
+TEST(octree, Subtest_17) {
+    ASSERT_TRUE(run_test_from_file(15));
+}
