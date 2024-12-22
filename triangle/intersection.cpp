@@ -1,6 +1,8 @@
 #include "../line/line_segment.h"
 #include <algorithm>
 
+const double DOUBLE_TOLERANCE = 1e-9;
+
 bool point_point_check(Triangle_t& triangle1, Triangle_t& triangle2) {
     return triangle1.get_a() == triangle2.get_a();
 }
@@ -17,10 +19,10 @@ std::pair<Point_t, Point_t> diff_points(Triangle_t& triangle) {
 
 bool segment_point_check(Point_t point, Triangle_t segment) {
     Line_t line{diff_points(segment)};
-    double t1 = line.get_t(segment.get_a(), 0);
-    double t2 = line.get_t(segment.get_b(), 0);
-    double t3 = line.get_t(segment.get_c(), 0);
-    double t  = line.get_t(point, 0);
+    double t1 = line.get_t(segment.get_a());
+    double t2 = line.get_t(segment.get_b());
+    double t3 = line.get_t(segment.get_c());
+    double t  = line.get_t(point);
     if(t > t1 && t > t2 && t > t3) {
         return false;
     }
@@ -35,32 +37,49 @@ bool point_triangle_check(Point_t& point, Triangle_t& triangle) {
     double SABP = Triangle_t(triangle.get_a(), triangle.get_b(), point).triangle_square();
     double SAPC = Triangle_t(triangle.get_a(), point, triangle.get_c()).triangle_square();
     double SPBC = Triangle_t(point, triangle.get_b(), triangle.get_c()).triangle_square();
-    return std::abs(SABC - SABP - SAPC - SPBC) < 1e-6;
+    return std::abs(SABC - SABP - SAPC - SPBC) < DOUBLE_TOLERANCE;
 }
 
-bool check_lines_intersection(Line_t line1, Line_t line2, int i, int j, int k, 
-                                     double& t1, double& t2) {
-    if(line1.get_v()[i] * line2.get_v()[j] -
-       line2.get_v()[i] * line1.get_v()[j] != 0) {
-        t2 = ((line1.get_p()[i] - line2.get_p()[i]) * line1.get_v()[j] 
-           + (line2.get_p()[j] - line1.get_p()[j]) * line1.get_v()[i])
-           / (line2.get_v()[i] * line1.get_v()[j] - line2.get_v()[j] * line1.get_v()[i]);
-
-        if(line1.get_v()[i]) { 
-            t1 = (line2.get_v()[i] * t2 + line2.get_p()[i] - line1.get_p()[i])
-                / line1.get_v()[i];
-        }
-        else {
-            t1 = (line2.get_v()[j] * t2 + line2.get_p()[j] - line1.get_p()[j])
-                / line1.get_v()[j];
-        }
-
-        if((line1.get_v()[k] * t1 + line1.get_p()[k]) != 
-           (line2.get_v()[k] * t2 + line2.get_p()[k])) {
-            return false;
-        }
+bool check_lines_intersection(Line_t line1, Line_t line2, double& t1, double& t2) {
+    double main_det = line1.get_v().get_y() * line2.get_v().get_x()
+                    - line1.get_v().get_x() * line2.get_v().get_y();
+    if(!(std::abs(main_det) < DOUBLE_TOLERANCE)) {
+        double sub_det1 = (line2.get_p().get_y() - line1.get_p().get_y()) * line2.get_v().get_x()
+                        - (line2.get_p().get_x() - line1.get_p().get_x()) * line2.get_v().get_y();
+        double sub_det2 = (line1.get_p().get_x() - line2.get_p().get_x()) * line1.get_v().get_y()
+                        - (line1.get_p().get_y() - line2.get_p().get_y()) * line1.get_v().get_x();
+        
+        t2 = (sub_det1 / main_det);
+        t1 = (sub_det2 / main_det);
         return true;
     }
+
+    main_det = line1.get_v().get_z() * line2.get_v().get_x()
+             - line1.get_v().get_x() * line2.get_v().get_z();
+    if(!(std::abs(main_det) < DOUBLE_TOLERANCE)) {
+        double sub_det1 = (line2.get_p().get_z() - line1.get_p().get_z()) * line2.get_v().get_x()
+                        - (line2.get_p().get_x() - line1.get_p().get_x()) * line2.get_v().get_z();
+        double sub_det2 = (line1.get_p().get_z() - line2.get_p().get_z()) * line1.get_v().get_x()
+                        - (line1.get_p().get_x() - line2.get_p().get_x()) * line1.get_v().get_z();
+        
+        t2 = (sub_det1 / main_det);
+        t1 = (sub_det2 / main_det);
+        return true;
+    }
+
+    main_det = line1.get_v().get_z() * line2.get_v().get_y()
+             - line1.get_v().get_y() * line2.get_v().get_z();
+    if(!(std::abs(main_det) < DOUBLE_TOLERANCE)) {
+        double sub_det1 = (line2.get_p().get_z() - line1.get_p().get_z()) * line2.get_v().get_x()
+                        - (line2.get_p().get_x() - line1.get_p().get_x()) * line2.get_v().get_z();
+        double sub_det2 = (line1.get_p().get_z() - line2.get_p().get_z()) * line1.get_v().get_x()
+                        - (line1.get_p().get_x() - line2.get_p().get_x()) * line1.get_v().get_z();
+
+        t2 = (sub_det1 / main_det);
+        t1 = (sub_det2 / main_det);
+        return true;
+    }
+
     return false;
 }
 
@@ -75,38 +94,36 @@ bool segment_segment_check(Triangle_t& triangle1, Triangle_t& triangle2) {
         return false;
     }
 
-    double t2 = 0;
     double t1 = 0;
-    if(!check_lines_intersection(line1, line2, 0, 1, 2, t1, t2)) {
-        return false;
-    } else if(!check_lines_intersection(line1, line2, 1, 2, 0, t1, t2)) {
-        return false;
-    } else if(!check_lines_intersection(line1, line2, 2, 0, 1, t1, t2)) {
+    double t2 = 0;
+    if(!check_lines_intersection(line1, line2, t1, t2)) {
         return false;
     }
-    double min1 = std::min(std::min(line1.get_t(triangle1.get_a(), 0), 
-                                   line1.get_t(triangle1.get_b(), 0)), 
-                                   line1.get_t(triangle1.get_c(), 0));
+
+    double min1 = std::min(std::min(line1.get_t(triangle1.get_a()), 
+                                   line1.get_t(triangle1.get_b())), 
+                                   line1.get_t(triangle1.get_c()));
     
-    double max1 = std::max(std::max(line1.get_t(triangle1.get_a(), 0), 
-                                   line1.get_t(triangle1.get_b(), 0)),
-                                   line1.get_t(triangle1.get_c(), 0));
-
-    if(t1 < min1 && t1 > max1) {
+    double max1 = std::max(std::max(line1.get_t(triangle1.get_a()), 
+                                   line1.get_t(triangle1.get_b())),
+                                   line1.get_t(triangle1.get_c()));
+    
+    if(t1 < min1 || t1 > max1) {
         return false;
     }
 
-    double min2 = std::min(std::min(line2.get_t(triangle2.get_a(), 0), 
-                                   line2.get_t(triangle2.get_b(), 0)), 
-                                   line2.get_t(triangle2.get_c(), 0));
+    double min2 = std::min(std::min(line2.get_t(triangle2.get_a()), 
+                                   line2.get_t(triangle2.get_b())), 
+                                   line2.get_t(triangle2.get_c()));
 
-    double max2 = std::max(std::max(line2.get_t(triangle2.get_a(), 0), 
-                                   line2.get_t(triangle2.get_b(), 0)),
-                                   line2.get_t(triangle2.get_c(), 0));
+    double max2 = std::max(std::max(line2.get_t(triangle2.get_a()), 
+                                   line2.get_t(triangle2.get_b())),
+                                   line2.get_t(triangle2.get_c()));
 
-    if(t2 < min2 && t2 > max2) {
+    if(t2 < min2 || t2 > max2) {
         return false;
     }
+    
     return true;
 }
 
@@ -115,25 +132,18 @@ bool segment_triangle_check(Triangle_t& segment, Triangle_t& triangle) {
     if(!plane.vertices_on_one_side(segment)) {
         //check whether the task is reduced to the 2d case
         if(plane.vertices_on_plane(segment)) {
-            Triangle_t segment1(triangle.get_a(), 
-                                triangle.get_b(), 
+            Triangle_t segment1(triangle.get_a(),
+                                triangle.get_b(),
                                 triangle.get_b());
-            Triangle_t segment2(triangle.get_a(), 
-                                triangle.get_a(), 
+            Triangle_t segment2(triangle.get_a(),
+                                triangle.get_a(),
                                 triangle.get_c());
-            Triangle_t segment3(triangle.get_b(), 
-                                triangle.get_c(), 
+            Triangle_t segment3(triangle.get_b(),
+                                triangle.get_c(),
                                 triangle.get_c());
-            if(segment_segment_check(segment, segment1)) {
-                return true;
-            }
-            if(segment_segment_check(segment, segment2)) {
-                return true;
-            }
-            if(segment_segment_check(segment, segment3)) {
-                return true;
-            }
-            return false;
+            return segment_segment_check(segment, segment1)
+                || segment_segment_check(segment, segment2)
+                || segment_segment_check(segment, segment3);
         }
         Line_t intersection_planes_line{diff_points(segment)};
         Line_segment_t seg{segment, plane, intersection_planes_line};

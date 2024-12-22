@@ -337,16 +337,23 @@ TEST(CheckTriangle, Subtest_48) {
     ASSERT_FALSE(check_intersection(triangle1, triangle2));
 }
 
-TEST(triangle, Subtest_49) {
+TEST(CheckTriangle, Subtest_49) {
   Triangle_t triangle1({2.123, -2.52, 0}, {5.31, 141, 0}, {5.31, 141, 0});
   Triangle_t triangle2({-20, 10, 0}, {20, -50, 0}, {20, -50, 0});
 
   ASSERT_FALSE(check_intersection(triangle1, triangle2));
 }
 
-TEST(triangle, Subtest_50) {
+TEST(CheckTriangle, Subtest_50) {
   Triangle_t triangle1({0, 0, 0}, {1, 0, 0}, {0, 1, 0});
   Triangle_t triangle2({0, 0, 0.01}, {5, 5, 0.01}, {5, 5, 0});
 
   ASSERT_FALSE(check_intersection(triangle1, triangle2));
+}
+
+TEST(CheckTriangle, Subtest_51) {
+  Triangle_t triangle1({1835.6, 1569.0, 0}, {1846.0, 1559.9, 0}, {1835.7, 1567.0, 0});
+  Triangle_t triangle2({1845.9, 1561.8, 0}, {1845.9, 1561.8, 0}, {1845.5, 1553.1, 0});
+
+  ASSERT_TRUE(check_intersection(triangle1, triangle2));
 }

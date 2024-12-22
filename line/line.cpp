@@ -26,8 +26,20 @@ Point_t  Line_t::get_p() const {
     return point;
 }
 
-double Line_t::get_t(Point_t p, int i) const {
-    return (p[i] - point[i]) / vector[i];
+double Line_t::get_t(Point_t p) const {
+    for(int i = 0; i < 3; ++i) {
+        if(!(std::abs(vector[i]) < DOUBLE_TOLERANCE)) {
+            return (p[i] - point[i]) / vector[i];
+        }
+    }
+}
+
+Point_t Line_t::put_t(double t) const {
+    double x = vector.get_x() * t + point.get_x();
+    double y = vector.get_y() * t + point.get_y();
+    double z = vector.get_z() * t + point.get_z();
+    Point_t new_point(x, y, z);
+    return new_point;
 }
 
 bool Line_t::lines_match(Line_t& line) const {
@@ -51,6 +63,7 @@ double Line_segment_t::intersection_point(Point_t vertex1, Point_t vertex2,
 }
 
 Line_segment_t::Line_segment_t(Triangle_t& triangle, Plane_t& plane, Line_t& inst_line) {
+    line = inst_line;
     double f1 = plane.put_point_in_equation(triangle.get_a());
     if(std::abs(f1) < DOUBLE_TOLERANCE) {
         f1 = 0;
@@ -95,6 +108,14 @@ double Line_segment_t::get_t1() const {
 }
 double Line_segment_t::get_t2() const {
     return t2;
+}
+
+Point_t Line_segment_t::get_x1() const {
+    return line.put_t(t1);
+}
+
+Point_t Line_segment_t::get_x2() const {
+    return line.put_t(t2);
 }
 
 double Line_segment_t::compare_segments(Line_segment_t line_segment) const {

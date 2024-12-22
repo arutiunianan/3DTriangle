@@ -40,6 +40,7 @@ int main() {
         triangles.push_back(triangle);
     }
     std::unordered_set<size_t> intersecting_triangles;
+
     for(size_t i = 0; i < N; ++i) {
         for(size_t j = i + 1; j < N; ++j) {
             if(check_intersection(triangles[i], triangles[j])) {

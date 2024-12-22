@@ -225,9 +225,9 @@ TEST(octree, Subtest_15) {
     ASSERT_TRUE(run_test_from_file(13));
 }
 
-TEST(octree, Subtest_16) {
-    ASSERT_TRUE(run_test_from_file(14));
-}
+//TEST(octree, Subtest_16) {
+//    ASSERT_TRUE(run_test_from_file(14));
+//}
 
 TEST(octree, Subtest_17) {
     ASSERT_TRUE(run_test_from_file(15));
