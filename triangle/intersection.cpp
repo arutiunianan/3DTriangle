@@ -59,8 +59,8 @@ bool check_lines_intersection(Line_t line1, Line_t line2, double& t1, double& t2
     if(!(std::abs(main_det) < DOUBLE_TOLERANCE)) {
         double sub_det1 = (line2.get_p().get_z() - line1.get_p().get_z()) * line2.get_v().get_x()
                         - (line2.get_p().get_x() - line1.get_p().get_x()) * line2.get_v().get_z();
-        double sub_det2 = (line1.get_p().get_z() - line2.get_p().get_z()) * line1.get_v().get_x()
-                        - (line1.get_p().get_x() - line2.get_p().get_x()) * line1.get_v().get_z();
+        double sub_det2 = (line1.get_p().get_x() - line2.get_p().get_x()) * line1.get_v().get_z()
+                        - (line1.get_p().get_z() - line2.get_p().get_z()) * line1.get_v().get_x();
         
         t2 = (sub_det1 / main_det);
         t1 = (sub_det2 / main_det);
@@ -70,10 +70,10 @@ bool check_lines_intersection(Line_t line1, Line_t line2, double& t1, double& t2
     main_det = line1.get_v().get_z() * line2.get_v().get_y()
              - line1.get_v().get_y() * line2.get_v().get_z();
     if(!(std::abs(main_det) < DOUBLE_TOLERANCE)) {
-        double sub_det1 = (line2.get_p().get_z() - line1.get_p().get_z()) * line2.get_v().get_x()
-                        - (line2.get_p().get_x() - line1.get_p().get_x()) * line2.get_v().get_z();
-        double sub_det2 = (line1.get_p().get_z() - line2.get_p().get_z()) * line1.get_v().get_x()
-                        - (line1.get_p().get_x() - line2.get_p().get_x()) * line1.get_v().get_z();
+        double sub_det1 = (line2.get_p().get_z() - line1.get_p().get_z()) * line2.get_v().get_y()
+                        - (line2.get_p().get_y() - line1.get_p().get_y()) * line2.get_v().get_z();
+        double sub_det2 = (line1.get_p().get_y() - line2.get_p().get_y()) * line1.get_v().get_z()
+                        - (line1.get_p().get_z() - line2.get_p().get_z()) * line1.get_v().get_y();
 
         t2 = (sub_det1 / main_det);
         t1 = (sub_det2 / main_det);
